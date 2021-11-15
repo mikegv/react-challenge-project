@@ -8,6 +8,27 @@ router.get('/test', (req, res) => {
   res.json({ success: true });
 });
 
+
+
+router.get('/vieworder/:id', async (req, res) => {
+  try {
+    if (!req.params.id) {
+      res.status(400).json({ success: false, error: 'No id supplied' });
+      return;
+    }
+    const targetOrder = await Order.findOne({ _id: req.params.id });
+    if (!targetOrder) {
+      res.status(400).json({ success: false, error: 'No order exists with that id!' });
+      return;
+    }
+    res.status(200).json({ success: true, targetOrder });
+  } catch (error) {
+    res.status(500).json({ success: false, error });
+  }
+});
+
+
+
 router.get('/current-orders', async (req, res) => {
   try {
     const orders = await Order.find();
@@ -79,6 +100,7 @@ router.post('/edit-order', async (req, res) => {
       return;
     }
     res.status(200).json({ success: true });
+    console.log("whats going on");
   } catch(error) {
     res.status(500).json({ success: false, error });
   }
