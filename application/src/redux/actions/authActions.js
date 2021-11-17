@@ -22,12 +22,16 @@ export const loginUser = (email, password) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-        }).then(response => response.json())
+        }).then(response => 
+            {console.log("response", response)
+                return response.json()
+            })
         .then(response => {
+            console.log("err", response)
             if (response.success) {
                 dispatch(finishLogin(response.email, response.token));
             }
-        })
+        }).catch(error => {console.log(error)})
     };
 }
 
