@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from './types';
+import { LOGIN, LOGOUT, ISLOADING } from './types';
 import { SERVER_IP } from '../../private'
 
 const finishLogin = (email, token) => {
@@ -11,8 +11,18 @@ const finishLogin = (email, token) => {
     }
 }
 
+export const isLoading = () => {
+    return {
+        type: ISLOADING,
+        payload: null,
+    }
+}
+
 export const loginUser = (email, password) => {
     return (dispatch) => {
+        if(email != ""){
+            dispatch(isLoading());
+        }
         fetch(`${SERVER_IP}/api/login`, {
             method: 'POST',
             body: JSON.stringify({
@@ -22,16 +32,12 @@ export const loginUser = (email, password) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-        }).then(response => 
-            {console.log("response", response)
-                return response.json()
-            })
+        }).then(response => response.json())
         .then(response => {
-            console.log("err", response)
             if (response.success) {
                 dispatch(finishLogin(response.email, response.token));
             }
-        }).catch(error => {console.log(error)})
+        })
     };
 }
 

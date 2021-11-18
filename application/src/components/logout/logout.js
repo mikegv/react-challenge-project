@@ -12,21 +12,16 @@ const mapStateToProps = (state) => ({
     auth: state.auth,
 })
 
-
 class Logout extends Component{
     componentDidMount(){
+        this.props.history.push("/")
         this.props.commenceLogout()
-        setTimeout(() => {
-        window.location.replace("/")
-        }, 500);
     }
     render(){
         return(
             <div>
-                <h2>Logging out</h2>
-            </div>
+            </div> 
         )
-        
     }
 }
 

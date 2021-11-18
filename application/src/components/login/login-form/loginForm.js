@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'; 
 import { loginUser } from '../../../redux/actions/authActions'
 
-const mapActionsToProps = dispatch => ({
-  commenceLogin(email, password) {
-    dispatch(loginUser(email, password))
+ const mapActionsToProps =  dispatch => ({
+    commenceLogin(email, password) {
+     dispatch(loginUser(email, password))
   }
+})
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 })
 
 class LoginForm extends Component {
@@ -14,7 +18,7 @@ class LoginForm extends Component {
     password: "",
   }
 
-  login(e) {
+   login(e) {
     e.preventDefault();
     this.props.commenceLogin(this.state.email, this.state.password);
     this.props.onLogin();
@@ -43,4 +47,4 @@ class LoginForm extends Component {
   }
 }
 
-export default connect(null, mapActionsToProps)(LoginForm);
+export default connect(mapStateToProps, mapActionsToProps)(LoginForm);

@@ -4,6 +4,7 @@ import "./nav.css";
 
 
 const Nav = (props) => {
+    
     return (
         <div className="nav-strip">
             <Link to={"/order"} className="nav-link">
